@@ -8,7 +8,7 @@ car_data = pd.read_csv('vehicles.csv')
 # Criar um cabeçalho
 st.header('Análise de Dados de Veículos')
 
-# # Data Viewer
+# Data Viewer
 st.subheader('Data Viewer')
 
 # Adicionar um checkbox para incluir fabricantes com menos de 100 anúncios
@@ -27,7 +27,7 @@ else:
 st.write(car_data_filtered.head(23))
 
 # Criar um cabeçalho
-st.header('Vihicle Types by Manufaturer')
+st.header('Vehicle Types by Manufacturer')
 
 # Calcular o número de tipos de veículos por fabricante
 vehicle_types = car_data.groupby(
@@ -38,13 +38,16 @@ fig = px.bar(vehicle_types, x='model', y='count', color='type',
              title='Tipos de Veículos por Fabricante')
 st.plotly_chart(fig, use_container_width=True)
 
+# Gráfico de dispersão
+st.subheader('Histogram of Condition vs Model Year')
+fig_histogram = px.histogram(car_data, x='model_year',
+                             y='price', color='condition')
+st.plotly_chart(fig_histogram, use_container_width=True)
 
 # Gráfico de dispersão
-st.subheader('histogram of condition vs model_year')
-fig_scatter = px.histogram(car_data, x='model_year',
-                           y='price', color='condition')
+st.subheader('Scatter Plot: Odometer vs Price')
+fig_scatter = px.scatter(car_data, x='odometer', y='price', color='condition')
 st.plotly_chart(fig_scatter, use_container_width=True)
-
 
 # Criar um cabeçalho
 st.header('Compare price distribution between manufactures')
@@ -62,11 +65,11 @@ filtered_data_manufacturer_2 = car_data[car_data['model'] == manufacturer_2]
 normalize_checkbox = st.checkbox('Normalize Histogram')
 
 # Plotar os gráficos de barras sobrepostas
-fig = px.histogram(filtered_data_manufacturer_1, x='price',
-                   histnorm='percent', opacity=0.75)
+fig_comparison = px.histogram(filtered_data_manufacturer_1, x='price',
+                              histnorm='percent', opacity=0.75)
 
-fig.add_histogram(x=filtered_data_manufacturer_2['price'], histnorm='percent', opacity=0.75,
-                  name=manufacturer_2)
-fig.update_layout(barmode='overlay', xaxis_title='Price',
-                  yaxis_title='Percente', legend_title='Manufacturer')
-st.plotly_chart(fig, use_container_width=True)
+fig_comparison.add_histogram(x=filtered_data_manufacturer_2['price'], histnorm='percent', opacity=0.75,
+                             name=manufacturer_2)
+fig_comparison.update_layout(barmode='overlay', xaxis_title='Price',
+                             yaxis_title='Percente', legend_title='Manufacturer')
+st.plotly_chart(fig_comparison, use_container_width=True)
