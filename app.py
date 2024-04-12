@@ -38,14 +38,9 @@ fig = px.bar(vehicle_types, x='model', y='count', color='type',
              title='Tipos de Veículos por Fabricante')
 st.plotly_chart(fig, use_container_width=True)
 
-# Gráfico de dispersão
-st.subheader('Histogram of Condition vs Model Year')
-fig_histogram = px.histogram(car_data, x='model_year',
-                             y='price', color='condition')
-st.plotly_chart(fig_histogram, use_container_width=True)
 
 # Gráfico de dispersão
-st.subheader('Scatter Plot: Odometer vs Price')
+st.subheader('histogram of condition vs model_year')
 fig_scatter = px.scatter(car_data, x='odometer', y='price', color='condition')
 st.plotly_chart(fig_scatter, use_container_width=True)
 
